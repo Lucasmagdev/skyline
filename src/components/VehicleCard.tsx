@@ -83,8 +83,7 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           <Link
             to="/fleet/$id"
             params={{ id: vehicle.id }}
-            disabled={vehicle.status !== "AVAILABLE"}
-            className="bg-foreground px-4 py-2.5 font-display text-[11px] uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90 aria-disabled:cursor-not-allowed aria-disabled:opacity-30"
+            className="bg-foreground px-4 py-2.5 font-display text-[11px] uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90"
           >
             {vehicle.status === "AVAILABLE" ? "Reserve" : "View"}
           </Link>
