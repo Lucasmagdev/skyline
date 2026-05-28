@@ -1,4 +1,5 @@
 import { Users, Fuel, Gauge } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export type VehicleStatus = "AVAILABLE" | "RENTED" | "MAINTENANCE";
 
@@ -79,12 +80,13 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
               <span className="text-sm text-silver ml-1">/day</span>
             </p>
           </div>
-          <button
-            disabled={vehicle.status !== "AVAILABLE"}
-            className="bg-foreground px-4 py-2.5 font-display text-[11px] uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
+          <Link
+            to="/fleet/$id"
+            params={{ id: vehicle.id }}
+            className="bg-foreground px-4 py-2.5 font-display text-[11px] uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90"
           >
-            Reserve
-          </button>
+            {vehicle.status === "AVAILABLE" ? "Reserve" : "View"}
+          </Link>
         </div>
       </div>
     </article>

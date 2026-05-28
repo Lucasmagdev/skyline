@@ -1,0 +1,20 @@
+export interface Reservation {
+  id: string;
+  vehicleId: string;
+  customer: string;
+  email: string;
+  pickup: string;
+  pickupDate: string;
+  returnDate: string;
+  total: number;
+  status: "CONFIRMED" | "ACTIVE" | "COMPLETED" | "CANCELLED";
+}
+
+export const reservations: Reservation[] = [
+  { id: "RV-1042", vehicleId: "f8", customer: "Lucas Andrade", email: "lucas@skyclub.com", pickup: "Los Angeles, CA", pickupDate: "2026-05-28", returnDate: "2026-06-02", total: 6450, status: "ACTIVE" },
+  { id: "RV-1041", vehicleId: "m4", customer: "Sophia Martins", email: "sophia.m@gmail.com", pickup: "Miami, FL", pickupDate: "2026-05-30", returnDate: "2026-06-03", total: 1556, status: "CONFIRMED" },
+  { id: "RV-1040", vehicleId: "rrs", customer: "Daniel Ross", email: "dross@northbay.io", pickup: "New York, NY", pickupDate: "2026-06-04", returnDate: "2026-06-10", total: 2754, status: "CONFIRMED" },
+  { id: "RV-1039", vehicleId: "ms", customer: "Aiko Tanaka", email: "aiko@studio.jp", pickup: "Los Angeles, CA", pickupDate: "2026-05-20", returnDate: "2026-05-26", total: 2094, status: "COMPLETED" },
+  { id: "RV-1038", vehicleId: "m4", customer: "Mateus Lima", email: "mateus@lima.dev", pickup: "São Paulo, BR", pickupDate: "2026-05-18", returnDate: "2026-05-22", total: 1556, status: "COMPLETED" },
+  { id: "RV-1037", vehicleId: "f8", customer: "Helena Cruz", email: "helena.c@hcgroup.com", pickup: "Miami, FL", pickupDate: "2026-05-10", returnDate: "2026-05-13", total: 3870, status: "CANCELLED" },
+];
