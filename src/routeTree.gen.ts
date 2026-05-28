@@ -9,38 +9,135 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MaintenanceIndexRouteImport } from './routes/maintenance.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as MaintenanceVehicleIdRouteImport } from './routes/maintenance.$vehicleId'
+import { Route as FleetIdRouteImport } from './routes/fleet.$id'
+import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
+import { Route as AdminFleetRouteImport } from './routes/admin.fleet'
 
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaintenanceIndexRoute = MaintenanceIndexRouteImport.update({
+  id: '/maintenance/',
+  path: '/maintenance/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const MaintenanceVehicleIdRoute = MaintenanceVehicleIdRouteImport.update({
+  id: '/maintenance/$vehicleId',
+  path: '/maintenance/$vehicleId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FleetIdRoute = FleetIdRouteImport.update({
+  id: '/fleet/$id',
+  path: '/fleet/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReservationsRoute = AdminReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFleetRoute = AdminFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/fleet': typeof AdminFleetRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/fleet/$id': typeof FleetIdRoute
+  '/maintenance/$vehicleId': typeof MaintenanceVehicleIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/maintenance/': typeof MaintenanceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/fleet': typeof AdminFleetRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/fleet/$id': typeof FleetIdRoute
+  '/maintenance/$vehicleId': typeof MaintenanceVehicleIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/maintenance': typeof MaintenanceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/fleet': typeof AdminFleetRoute
+  '/admin/reservations': typeof AdminReservationsRoute
+  '/fleet/$id': typeof FleetIdRoute
+  '/maintenance/$vehicleId': typeof MaintenanceVehicleIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/maintenance/': typeof MaintenanceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/admin/fleet'
+    | '/admin/reservations'
+    | '/fleet/$id'
+    | '/maintenance/$vehicleId'
+    | '/admin/'
+    | '/maintenance/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin/fleet'
+    | '/admin/reservations'
+    | '/fleet/$id'
+    | '/maintenance/$vehicleId'
+    | '/admin'
+    | '/maintenance'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/admin/fleet'
+    | '/admin/reservations'
+    | '/fleet/$id'
+    | '/maintenance/$vehicleId'
+    | '/admin/'
+    | '/maintenance/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  FleetIdRoute: typeof FleetIdRoute
+  MaintenanceVehicleIdRoute: typeof MaintenanceVehicleIdRoute
+  MaintenanceIndexRoute: typeof MaintenanceIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +145,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/maintenance/': {
+      id: '/maintenance/'
+      path: '/maintenance'
+      fullPath: '/maintenance/'
+      preLoaderRoute: typeof MaintenanceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/maintenance/$vehicleId': {
+      id: '/maintenance/$vehicleId'
+      path: '/maintenance/$vehicleId'
+      fullPath: '/maintenance/$vehicleId'
+      preLoaderRoute: typeof MaintenanceVehicleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fleet/$id': {
+      id: '/fleet/$id'
+      path: '/fleet/$id'
+      fullPath: '/fleet/$id'
+      preLoaderRoute: typeof FleetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reservations': {
+      id: '/admin/reservations'
+      path: '/reservations'
+      fullPath: '/admin/reservations'
+      preLoaderRoute: typeof AdminReservationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/fleet': {
+      id: '/admin/fleet'
+      path: '/fleet'
+      fullPath: '/admin/fleet'
+      preLoaderRoute: typeof AdminFleetRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminFleetRoute: typeof AdminFleetRoute
+  AdminReservationsRoute: typeof AdminReservationsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminFleetRoute: AdminFleetRoute,
+  AdminReservationsRoute: AdminReservationsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  FleetIdRoute: FleetIdRoute,
+  MaintenanceVehicleIdRoute: MaintenanceVehicleIdRoute,
+  MaintenanceIndexRoute: MaintenanceIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
