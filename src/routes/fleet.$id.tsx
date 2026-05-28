@@ -77,7 +77,7 @@ function VehicleDetailPage() {
             <img src={activeImage} alt={`${vehicle.brand} ${vehicle.name}`} className="h-full w-full object-cover" />
           </div>
           <div className="mt-3 grid grid-cols-4 gap-3">
-            {vehicle.gallery.map((g, i) => (
+            {vehicle.gallery.map((g: string, i: number) => (
               <button
                 key={i}
                 onClick={() => setActiveImage(g)}
@@ -103,7 +103,7 @@ function VehicleDetailPage() {
             <div className="mt-10">
               <h3 className="font-display text-xs uppercase tracking-wider-2 text-silver">Features</h3>
               <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {vehicle.features.map((f) => (
+                {vehicle.features.map((f: string) => (
                   <li key={f} className="flex items-center gap-3 hairline px-4 py-3">
                     <Check className="h-4 w-4 text-foreground" />
                     <span className="text-sm">{f}</span>
