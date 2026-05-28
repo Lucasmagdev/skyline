@@ -75,11 +75,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Skyline Car Rental — Premium Fleet" },
       { name: "description", content: "Premium automotive experiences. Curated fleet, surgical service." },
       { name: "author", content: "Skyline Car Rental" },
-      { property: "og:title", content: "Skyline Car Rental" },
+      { property: "og:title", content: "Skyline Car Rental — Premium Fleet" },
       { property: "og:description", content: "Premium automotive experiences. Curated fleet, surgical service." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
 
+      { name: "twitter:title", content: "Skyline Car Rental — Premium Fleet" },
+      { name: "twitter:description", content: "Premium automotive experiences. Curated fleet, surgical service." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/0b7cfea2-873a-4e23-9371-3254b5fecba4" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/0b7cfea2-873a-4e23-9371-3254b5fecba4" },
     ],
     links: [
       {
