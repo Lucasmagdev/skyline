@@ -1,20 +1,7 @@
 import { Users, Fuel, Gauge } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-
-export type VehicleStatus = "AVAILABLE" | "RENTED" | "MAINTENANCE";
-
-export interface Vehicle {
-  id: string;
-  name: string;
-  brand: string;
-  category: string;
-  image: string;
-  pricePerDay: number;
-  transmission: string;
-  seats: number;
-  horsepower: number;
-  status: VehicleStatus;
-}
+import { useLocale } from "@/contexts/LocaleContext";
+import type { Vehicle, VehicleStatus } from "@/types/fleet";
 
 const statusStyles: Record<VehicleStatus, string> = {
   AVAILABLE: "text-success border-success/40 bg-success/5",
@@ -23,6 +10,8 @@ const statusStyles: Record<VehicleStatus, string> = {
 };
 
 export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
+  const { formatCurrency, t } = useLocale();
+
   return (
     <article className="group hairline hover-surface relative flex flex-col overflow-hidden bg-card">
       {/* Status badge */}
@@ -31,14 +20,14 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
           className={`inline-flex items-center gap-1.5 border px-2.5 py-1 font-display text-[10px] uppercase tracking-wider-2 ${statusStyles[vehicle.status]}`}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-current" />
-          {vehicle.status}
+          {t(`common.status.${vehicle.status.toLowerCase()}`)}
         </span>
       </div>
 
       {/* Category tag */}
       <div className="absolute right-4 top-4 z-10">
         <span className="font-display text-[10px] uppercase tracking-wider-2 text-silver">
-          {vehicle.category}
+          {t(`common.category.${vehicle.category.toLowerCase()}`)}
         </span>
       </div>
 
@@ -69,15 +58,20 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         <div className="grid grid-cols-3 gap-3 py-4">
           <Spec icon={<Gauge className="h-3.5 w-3.5" />} label={`${vehicle.horsepower} HP`} />
           <Spec icon={<Fuel className="h-3.5 w-3.5" />} label={vehicle.transmission} />
-          <Spec icon={<Users className="h-3.5 w-3.5" />} label={`${vehicle.seats} seats`} />
+          <Spec
+            icon={<Users className="h-3.5 w-3.5" />}
+            label={`${vehicle.seats} ${t("vehicle.seats")}`}
+          />
         </div>
 
         <div className="hairline-t mt-auto flex items-end justify-between pt-4">
           <div>
-            <p className="font-display text-[10px] uppercase tracking-wider-2 text-silver">From</p>
+            <p className="font-display text-[10px] uppercase tracking-wider-2 text-silver">
+              {t("vehicle.from")}
+            </p>
             <p className="font-display text-2xl text-foreground leading-none mt-1">
-              ${vehicle.pricePerDay}
-              <span className="text-sm text-silver ml-1">/day</span>
+              {formatCurrency(vehicle.pricePerDay)}
+              <span className="text-sm text-silver ml-1">{t("vehicle.perDay")}</span>
             </p>
           </div>
           <Link
@@ -85,7 +79,7 @@ export function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
             params={{ id: vehicle.id }}
             className="bg-foreground px-4 py-2.5 font-display text-[11px] uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90"
           >
-            {vehicle.status === "AVAILABLE" ? "Reserve" : "View"}
+            {vehicle.status === "AVAILABLE" ? t("vehicle.reserve") : t("vehicle.view")}
           </Link>
         </div>
       </div>

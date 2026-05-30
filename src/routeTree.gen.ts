@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MaintenanceIndexRouteImport } from './routes/maintenance.index'
@@ -18,6 +19,11 @@ import { Route as FleetIdRouteImport } from './routes/fleet.$id'
 import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 import { Route as AdminFleetRouteImport } from './routes/admin.fleet'
 
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -62,6 +68,7 @@ const AdminFleetRoute = AdminFleetRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/sign-in': typeof SignInRoute
   '/admin/fleet': typeof AdminFleetRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/fleet/$id': typeof FleetIdRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sign-in': typeof SignInRoute
   '/admin/fleet': typeof AdminFleetRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/fleet/$id': typeof FleetIdRoute
@@ -82,6 +90,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/sign-in': typeof SignInRoute
   '/admin/fleet': typeof AdminFleetRoute
   '/admin/reservations': typeof AdminReservationsRoute
   '/fleet/$id': typeof FleetIdRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/sign-in'
     | '/admin/fleet'
     | '/admin/reservations'
     | '/fleet/$id'
@@ -103,6 +113,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/sign-in'
     | '/admin/fleet'
     | '/admin/reservations'
     | '/fleet/$id'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/sign-in'
     | '/admin/fleet'
     | '/admin/reservations'
     | '/fleet/$id'
@@ -124,6 +136,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  SignInRoute: typeof SignInRoute
   FleetIdRoute: typeof FleetIdRoute
   MaintenanceVehicleIdRoute: typeof MaintenanceVehicleIdRoute
   MaintenanceIndexRoute: typeof MaintenanceIndexRoute
@@ -131,6 +144,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -207,6 +227,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  SignInRoute: SignInRoute,
   FleetIdRoute: FleetIdRoute,
   MaintenanceVehicleIdRoute: MaintenanceVehicleIdRoute,
   MaintenanceIndexRoute: MaintenanceIndexRoute,
@@ -214,3 +235,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

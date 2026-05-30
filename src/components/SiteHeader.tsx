@@ -2,16 +2,24 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SkylineLogo } from "./SkylineLogo";
 import { Menu, X } from "lucide-react";
-
-const nav = [
-  { label: "Fleet", to: "/" },
-  { label: "Maintenance", to: "/maintenance" },
-  { label: "Admin", to: "/admin" },
-];
+import { useAuth } from "@/contexts/AuthContext";
+import { useLocale } from "@/contexts/LocaleContext";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<"EN" | "PT">("EN");
+  const { user, signOut } = useAuth();
+  const { languageLabel, t } = useLocale();
+
+  const isInternal = user?.role === "concierge" || user?.role === "inspector";
+  const nav = isInternal
+    ? []
+    : [{ label: t("common.fleet"), to: "/#fleet" }];
+
+  function signedInLabel() {
+    if (user?.role === "concierge") return t("header.signedIn.concierge");
+    if (user?.role === "inspector") return t("header.signedIn.inspector");
+    return t("header.signedIn.customer");
+  }
 
   return (
     <header className="sticky top-0 z-50 hairline-b bg-background/80 backdrop-blur-xl">
@@ -22,43 +30,52 @@ export function SiteHeader() {
 
         <nav className="hidden items-center gap-10 md:flex">
           {nav.map((item) => (
-            <Link
+            <a
               key={item.label}
-              to={item.to}
+              href={item.to}
               className="font-display text-xs uppercase tracking-wider-2 text-silver transition-colors hover:text-foreground"
             >
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <button
-            onClick={() => setLang(lang === "EN" ? "PT" : "EN")}
-            className="font-display text-[11px] uppercase tracking-wider-2 text-silver hover:text-foreground"
-            aria-label="Toggle language"
+          <span
+            className="font-display text-[11px] uppercase tracking-wider-2 text-silver"
+            aria-label={t("common.currentLanguage")}
           >
-            {lang} <span className="text-foreground/30 mx-1">/</span>{" "}
-            <span className="text-foreground/30">{lang === "EN" ? "PT" : "EN"}</span>
-          </button>
-          <Link
-            to="/"
-            className="font-display text-xs uppercase tracking-wider-2 text-silver hover:text-foreground"
-          >
-            Sign in
-          </Link>
-          <Link
-            to="/"
-            className="inline-flex items-center bg-foreground px-5 py-2.5 font-display text-xs uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90"
-          >
-            Reserve
-          </Link>
+            {languageLabel}
+          </span>
+          {user ? (
+            <button
+              onClick={signOut}
+              className="font-display text-xs uppercase tracking-wider-2 text-silver hover:text-foreground"
+            >
+              {signedInLabel()}
+            </button>
+          ) : (
+            <Link
+              to="/sign-in"
+              className="font-display text-xs uppercase tracking-wider-2 text-silver hover:text-foreground"
+            >
+              {t("common.signIn")}
+            </Link>
+          )}
+          {!isInternal && (
+            <a
+              href="/#booking"
+              className="inline-flex items-center bg-foreground px-5 py-2.5 font-display text-xs uppercase tracking-wider-2 text-background transition-opacity hover:opacity-90"
+            >
+              {t("common.reserve")}
+            </a>
+          )}
         </div>
 
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-foreground"
-          aria-label="Toggle menu"
+          aria-label={t("common.toggleMenu")}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -68,21 +85,43 @@ export function SiteHeader() {
         <div className="md:hidden hairline-t">
           <nav className="flex flex-col px-6 py-4">
             {nav.map((item) => (
-              <Link
+              <a
                 key={item.label}
-                to={item.to}
+                href={item.to}
                 onClick={() => setOpen(false)}
                 className="font-display py-3 text-sm uppercase tracking-wider-2 text-silver hover:text-foreground"
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
-            <Link
-              to="/"
-              className="mt-3 inline-flex items-center justify-center bg-foreground px-5 py-3 font-display text-xs uppercase tracking-wider-2 text-background"
-            >
-              Reserve
-            </Link>
+            {user ? (
+              <button
+                onClick={() => {
+                  signOut();
+                  setOpen(false);
+                }}
+                className="py-3 text-left font-display text-sm uppercase tracking-wider-2 text-silver hover:text-foreground"
+              >
+                {t("common.signOut")}
+              </button>
+            ) : (
+              <Link
+                to="/sign-in"
+                onClick={() => setOpen(false)}
+                className="py-3 font-display text-sm uppercase tracking-wider-2 text-silver hover:text-foreground"
+              >
+                {t("common.signIn")}
+              </Link>
+            )}
+            {!isInternal && (
+              <a
+                href="/#booking"
+                onClick={() => setOpen(false)}
+                className="mt-3 inline-flex items-center justify-center bg-foreground px-5 py-3 font-display text-xs uppercase tracking-wider-2 text-background"
+              >
+                {t("common.reserve")}
+              </a>
+            )}
           </nav>
         </div>
       )}

@@ -1,20 +1,8 @@
-import { Vehicle } from "@/components/VehicleCard";
 import car1 from "@/assets/car-1.jpg";
 import car2 from "@/assets/car-2.jpg";
 import car3 from "@/assets/car-3.jpg";
 import car4 from "@/assets/car-4.jpg";
-
-export interface VehicleDetail extends Vehicle {
-  year: number;
-  plate: string;
-  mileage: number;
-  fuelType: string;
-  topSpeed: number;
-  acceleration: number; // 0-100 km/h seconds
-  description: string;
-  gallery: string[];
-  features: string[];
-}
+import type { VehicleDetail } from "@/types/fleet";
 
 export const vehicles: VehicleDetail[] = [
   {
@@ -37,7 +25,12 @@ export const vehicles: VehicleDetail[] = [
     description:
       "The M4 Competition is a precision-engineered grand tourer. Twin-turbo inline-six, carbon-fiber roof, and a soundtrack tuned in Munich.",
     gallery: [car1, car2, car3, car4],
-    features: ["Carbon ceramic brakes", "Adaptive M suspension", "Harman Kardon audio", "Heads-up display"],
+    features: [
+      "Carbon ceramic brakes",
+      "Adaptive M suspension",
+      "Harman Kardon audio",
+      "Heads-up display",
+    ],
   },
   {
     id: "rrs",
@@ -81,7 +74,12 @@ export const vehicles: VehicleDetail[] = [
     description:
       "An icon. The F8 Tributo distills decades of Maranello's V8 heritage into a single, devastating machine.",
     gallery: [car3, car1, car2, car4],
-    features: ["Side Slip Control 6.1", "Ferrari Dynamic Enhancer", "Carbon fiber package", "Racing seats"],
+    features: [
+      "Side Slip Control 6.1",
+      "Ferrari Dynamic Enhancer",
+      "Carbon fiber package",
+      "Racing seats",
+    ],
   },
   {
     id: "ms",
@@ -103,7 +101,7 @@ export const vehicles: VehicleDetail[] = [
     description:
       "Three motors, 1020 horsepower, and silence. The Plaid is the fastest accelerating production car ever made.",
     gallery: [car4, car2, car1, car3],
-    features: ["Tri-motor AWD", "Autopilot included", "17\" cinematic display", "Yoke steering"],
+    features: ["Tri-motor AWD", "Autopilot included", '17" cinematic display', "Yoke steering"],
   },
 ];
 

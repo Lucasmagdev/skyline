@@ -1,8 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -54,12 +53,12 @@
   --radius: 0.25rem;
 
   /* Core neutrals — true blacks */
-  --background: oklch(0.02 0 0);          /* #0A0A0A */
-  --foreground: oklch(1 0 0);              /* #FFFFFF */
+  --background: oklch(0.02 0 0); /* #0A0A0A */
+  --foreground: oklch(1 0 0); /* #FFFFFF */
 
-  --surface-1: oklch(0.08 0 0);            /* #111111 cards */
-  --surface-2: oklch(0.12 0 0);            /* #1A1A1A inputs/hover */
-  --surface-3: oklch(0.16 0 0);            /* elevated */
+  --surface-1: oklch(0.08 0 0); /* #111111 cards */
+  --surface-2: oklch(0.12 0 0); /* #1A1A1A inputs/hover */
+  --surface-3: oklch(0.16 0 0); /* elevated */
 
   --card: oklch(0.08 0 0);
   --card-foreground: oklch(1 0 0);
@@ -74,17 +73,17 @@
   --secondary-foreground: oklch(1 0 0);
 
   --muted: oklch(0.12 0 0);
-  --muted-foreground: oklch(0.62 0 0);     /* silver-ish */
+  --muted-foreground: oklch(0.62 0 0); /* silver-ish */
 
   --accent: oklch(0.16 0 0);
   --accent-foreground: oklch(1 0 0);
 
-  --silver: oklch(0.78 0 0);                /* #C0C0C0 */
-  --skyline-blue: oklch(0.36 0.18 270);     /* #1B2FA8 */
+  --silver: oklch(0.78 0 0); /* #C0C0C0 */
+  --skyline-blue: oklch(0.36 0.18 270); /* #1B2FA8 */
 
-  --success: oklch(0.72 0.18 145);          /* #22C55E */
-  --warning: oklch(0.78 0.16 75);           /* #F59E0B */
-  --danger: oklch(0.64 0.24 25);            /* #EF4444 */
+  --success: oklch(0.72 0.18 145); /* #22C55E */
+  --warning: oklch(0.78 0.16 75); /* #F59E0B */
+  --danger: oklch(0.64 0.24 25); /* #EF4444 */
   --destructive: oklch(0.64 0.24 25);
   --destructive-foreground: oklch(1 0 0);
 
@@ -110,7 +109,8 @@
     border-color: var(--color-border);
   }
 
-  html, body {
+  html,
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -118,7 +118,13 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-display {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
     font-family: var(--font-display);
     letter-spacing: 0.02em;
   }
@@ -134,30 +140,47 @@
   .hairline {
     border: 1px solid var(--hairline);
   }
-  .hairline-t { border-top: 1px solid var(--hairline); }
-  .hairline-b { border-bottom: 1px solid var(--hairline); }
+  .hairline-t {
+    border-top: 1px solid var(--hairline);
+  }
+  .hairline-b {
+    border-bottom: 1px solid var(--hairline);
+  }
 
-  .text-silver { color: var(--silver); }
+  .text-silver {
+    color: var(--silver);
+  }
 
-  .surface-1 { background-color: var(--surface-1); }
-  .surface-2 { background-color: var(--surface-2); }
+  .surface-1 {
+    background-color: var(--surface-1);
+  }
+  .surface-2 {
+    background-color: var(--surface-2);
+  }
 
-  .tracking-display { letter-spacing: 0.08em; }
-  .tracking-wider-2 { letter-spacing: 0.14em; }
+  .tracking-display {
+    letter-spacing: 0.08em;
+  }
+  .tracking-wider-2 {
+    letter-spacing: 0.14em;
+  }
 
   /* Subtle car grid background */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .hover-surface {
-    transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
   }
   .hover-surface:hover {
-    background-color: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.16);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.16);
   }
 }
