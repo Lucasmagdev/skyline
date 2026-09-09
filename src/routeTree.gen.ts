@@ -9,19 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignInRouteImport } from './routes/sign-in'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MaintenanceIndexRouteImport } from './routes/maintenance.index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as MaintenanceVehicleIdRouteImport } from './routes/maintenance.$vehicleId'
-import { Route as FleetIdRouteImport } from './routes/fleet.$id'
-import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
 import { Route as AdminFleetRouteImport } from './routes/admin.fleet'
+import { Route as AdminReservationsRouteImport } from './routes/admin.reservations'
+import { Route as FleetIdRouteImport } from './routes/fleet.$id'
+import { Route as MaintenanceIndexRouteImport } from './routes/maintenance.index'
+import { Route as MaintenanceVehicleIdRouteImport } from './routes/maintenance.$vehicleId'
 
-const SignInRoute = SignInRouteImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -29,14 +29,9 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MaintenanceIndexRoute = MaintenanceIndexRouteImport.update({
-  id: '/maintenance/',
-  path: '/maintenance/',
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -44,25 +39,30 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const MaintenanceVehicleIdRoute = MaintenanceVehicleIdRouteImport.update({
-  id: '/maintenance/$vehicleId',
-  path: '/maintenance/$vehicleId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FleetIdRoute = FleetIdRouteImport.update({
-  id: '/fleet/$id',
-  path: '/fleet/$id',
-  getParentRoute: () => rootRouteImport,
+const AdminFleetRoute = AdminFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminReservationsRoute = AdminReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminFleetRoute = AdminFleetRouteImport.update({
-  id: '/fleet',
-  path: '/fleet',
-  getParentRoute: () => AdminRoute,
+const FleetIdRoute = FleetIdRouteImport.update({
+  id: '/fleet/$id',
+  path: '/fleet/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintenanceIndexRoute = MaintenanceIndexRouteImport.update({
+  id: '/maintenance/',
+  path: '/maintenance/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaintenanceVehicleIdRoute = MaintenanceVehicleIdRouteImport.update({
+  id: '/maintenance/$vehicleId',
+  path: '/maintenance/$vehicleId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -144,11 +144,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sign-in': {
-      id: '/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -158,18 +158,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/maintenance/': {
-      id: '/maintenance/'
-      path: '/maintenance'
-      fullPath: '/maintenance/'
-      preLoaderRoute: typeof MaintenanceIndexRouteImport
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -179,19 +172,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/maintenance/$vehicleId': {
-      id: '/maintenance/$vehicleId'
-      path: '/maintenance/$vehicleId'
-      fullPath: '/maintenance/$vehicleId'
-      preLoaderRoute: typeof MaintenanceVehicleIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/fleet/$id': {
-      id: '/fleet/$id'
-      path: '/fleet/$id'
-      fullPath: '/fleet/$id'
-      preLoaderRoute: typeof FleetIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/fleet': {
+      id: '/admin/fleet'
+      path: '/fleet'
+      fullPath: '/admin/fleet'
+      preLoaderRoute: typeof AdminFleetRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/reservations': {
       id: '/admin/reservations'
@@ -200,12 +186,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReservationsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/fleet': {
-      id: '/admin/fleet'
-      path: '/fleet'
-      fullPath: '/admin/fleet'
-      preLoaderRoute: typeof AdminFleetRouteImport
-      parentRoute: typeof AdminRoute
+    '/fleet/$id': {
+      id: '/fleet/$id'
+      path: '/fleet/$id'
+      fullPath: '/fleet/$id'
+      preLoaderRoute: typeof FleetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maintenance/': {
+      id: '/maintenance/'
+      path: '/maintenance'
+      fullPath: '/maintenance/'
+      preLoaderRoute: typeof MaintenanceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maintenance/$vehicleId': {
+      id: '/maintenance/$vehicleId'
+      path: '/maintenance/$vehicleId'
+      fullPath: '/maintenance/$vehicleId'
+      preLoaderRoute: typeof MaintenanceVehicleIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }

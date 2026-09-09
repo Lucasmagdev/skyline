@@ -20,6 +20,14 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Netlify
+.netlify/
+
+# Playwright MCP
+.playwright-mcp/
+
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
