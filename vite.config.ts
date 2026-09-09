@@ -14,5 +14,14 @@ export default defineConfig({
   },
   nitro: {
     preset: "netlify",
+    // @lovable.dev/vite-tanstack-config hardcodes dist/server + dist/client as the
+    // nitro output regardless of preset, which breaks Netlify's function auto-discovery
+    // (it expects .netlify/functions-internal). Override it back to what the netlify
+    // preset actually needs.
+    output: {
+      dir: ".netlify/functions-internal",
+      serverDir: ".netlify/functions-internal/server",
+      publicDir: "dist",
+    },
   },
 });
