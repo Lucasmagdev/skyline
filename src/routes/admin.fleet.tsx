@@ -162,7 +162,7 @@ function AdminFleet() {
               <VehicleSelect
                 label={t("admin.category")}
                 value={form.category}
-                options={["Sport", "SUV", "Electric", "Supercar"].map((category) => ({
+                options={["Sport", "SUV", "Electric", "Supercar", "Sedan"].map((category) => ({
                   value: category,
                   label: t(`common.category.${category.toLowerCase()}`),
                 }))}

@@ -225,7 +225,7 @@ function HomePage() {
             </h2>
           </div>
           <div className="flex gap-2 flex-wrap">
-            {(["All", "Sport", "SUV", "Electric", "Supercar"] as const).map((c) => (
+            {(["All", "Sport", "SUV", "Electric", "Supercar", "Sedan"] as const).map((c) => (
               <button
                 key={c}
                 onClick={() => setCategory(c)}

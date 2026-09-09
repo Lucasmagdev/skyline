@@ -1,6 +1,6 @@
 export type VehicleStatus = "AVAILABLE" | "RENTED" | "MAINTENANCE";
 
-export type VehicleCategory = "Sport" | "SUV" | "Electric" | "Supercar";
+export type VehicleCategory = "Sport" | "SUV" | "Electric" | "Supercar" | "Sedan";
 
 export interface Vehicle {
   id: string;
